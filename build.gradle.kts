@@ -48,6 +48,11 @@ tasks.withType<KotlinCompile> {
     }
 }
 
+// build task 실행 시 Plain Jar 생성하지 않음.
+tasks.named<Jar>("jar") {
+    enabled = false
+}
+
 tasks.withType<Test> {
     useJUnitPlatform()
 }
