@@ -1,0 +1,31 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: web-api
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/**
+          filters:
+            - RewritePath=/api/?(?<segment>.*), /$\{segment}
+        - id: admin-api
+          uri: http://localhost:8082
+          predicates:
+            - Path=/admin/**
+          filters:
+            - RewritePath=/admin/?(?<segment>.*), /$\{segment}
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - POST
+
+server:
+  ssl:
+    enabled: false
+    key-alias: scg
+    key-store-password: scg1234
+    key-store: classpath:scg-keystore.p12
+    key-store-type: PKCS12
+  port: 80
